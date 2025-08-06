@@ -1,0 +1,182 @@
+<!--
+  Countdown Timer Website
+
+  This simple webpage displays countdown timers for three events. You can customize
+  the event names and target dates by editing the `events` array in the
+  <script> section below. Each event should have a name and a date/time in
+  the ISO‐8601 format (`YYYY-MM-DDTHH:MM:SS`). The countdown clocks are
+  updated every second using your browser’s local time.  
+
+  To customize:
+  1. Open this file in a text editor.
+  2. Scroll down to the `events` array (in the <script> tag near the end).
+  3. Replace the placeholder names and dates with your own.  
+     Example:
+       { name: "Wedding", date: "2026-04-15T14:30:00" }
+     Note: times are interpreted in your computer’s local timezone (Africa/Maputo
+     if your system time zone is set accordingly).
+  4. Save the file and refresh your browser to see your custom countdowns.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Events</title>
+  <style>
+    /* Basic reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    .timer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .event {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      text-align: center;
+      flex: 1 1 250px;
+      min-width: 250px;
+      max-width: 350px;
+    }
+
+    .event h2 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: #34495e;
+    }
+
+    .countdown {
+      font-family: 'Courier New', monospace;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      color: #e74c3c;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #7f8c8d;
+      text-align: center;
+      max-width: 800px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: linear-gradient(to bottom right, #2c3e50, #4ca1af);
+        color: #ecf0f1;
+      }
+      .event {
+        background: #34495e;
+        color: #ecf0f1;
+      }
+      h1, .event h2 {
+        color: #ecf0f1;
+      }
+      .countdown {
+        color: #f1c40f;
+      }
+      footer {
+        color: #bdc3c7;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Upcoming Events</h1>
+  <div class="timer-container" id="timerContainer">
+    <!-- Events will be injected here by JavaScript -->
+  </div>
+  <footer>
+    <p>Customize your events by editing the <code>events</code> array in the script below. The times are interpreted in your computer’s local timezone (Africa/Maputo if that is your system setting). Once you change the names and dates, save the file and refresh to see your updated countdowns.</p>
+  </footer>
+
+  <script>
+    // Define your events here. Each event should have a 'name' and 'date'
+    // property. The date should be in ISO 8601 format (YYYY-MM-DDTHH:MM:SS).
+    // You can add or remove events from this array.
+    const events = [
+      { name: 'Event 1', date: '2026-01-01T00:00:00' },
+      { name: 'Event 2', date: '2026-06-15T12:00:00' },
+      { name: 'Event 3', date: '2026-12-31T23:59:59' }
+    ];
+
+    const container = document.getElementById('timerContainer');
+
+    // Create elements for each event
+    events.forEach((event, index) => {
+      const eventDiv = document.createElement('div');
+      eventDiv.classList.add('event');
+      eventDiv.innerHTML = `
+        <h2>${event.name}</h2>
+        <div class="countdown" id="countdown-${index}">Loading...</div>
+      `;
+      container.appendChild(eventDiv);
+    });
+
+    function updateCountdowns() {
+      const now = new Date();
+
+      events.forEach((event, index) => {
+        const targetDate = new Date(event.date);
+        const diff = targetDate - now;
+
+        const countdownElement = document.getElementById(`countdown-${index}`);
+
+        if (isNaN(targetDate)) {
+          countdownElement.textContent = 'Invalid date';
+          return;
+        }
+
+        if (diff <= 0) {
+          countdownElement.textContent = 'Event has passed';
+          return;
+        }
+
+        // Calculate days, hours, minutes, seconds
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        // Format with leading zeros
+        const formatted = [days, hours, minutes, seconds].map((unit) => String(unit).padStart(2, '0'));
+        countdownElement.textContent = `${formatted[0]}d ${formatted[1]}h ${formatted[2]}m ${formatted[3]}s`;
+      });
+    }
+
+    // Initial call
+    updateCountdowns();
+    // Update every second
+    setInterval(updateCountdowns, 1000);
+  </script>
+</body>
+</html>
