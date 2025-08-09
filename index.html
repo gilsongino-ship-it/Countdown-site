@@ -1,29 +1,27 @@
-<!--
-  Countdown Timer Website
 
-  This simple webpage displays countdown timers for three events. You can customize
-  the event names and target dates by editing the `events` array in the
-  <script> section below. Each event should have a name and a date/time in
-  the ISO‐8601 format (`YYYY-MM-DDTHH:MM:SS`). The countdown clocks are
-  updated every second using your browser’s local time.  
-
-  To customize:
-  1. Open this file in a text editor.
-  2. Scroll down to the `events` array (in the <script> tag near the end).
-  3. Replace the placeholder names and dates with your own.  
-     Example:
-       { name: "Wedding", date: "2026-04-15T14:30:00" }
-     Note: times are interpreted in your computer’s local timezone (Africa/Maputo
-     if your system time zone is set accordingly).
-  4. Save the file and refresh your browser to see your custom countdowns.
--->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Countdown Events</title>
+<title>Coontagem Regressiva para Metas de Relacionamento</title>
   <style>
+    /*
+      Customize your colour scheme here! Change the values of these CSS variables
+      to match your personal style. Hex codes (#RRGGBB) or standard colour
+      names work. For example, change --bg-start and --bg-end to adjust the
+      background gradient, and --primary-text, --secondary-text and --accent
+      to modify text and accent colours.
+    */
+    :root {
+      /* Paleta suave inspirada em tons pastel de corações */
+      --bg-start: #fdeff3;
+      --bg-end:   #f5e9fd;
+      --primary-text: #403b4a;
+      --secondary-text: #5d4e6d;
+      --accent: #d36fa6;
+    }
+
     /* Basic reset */
     * {
       box-sizing: border-box;
@@ -32,9 +30,9 @@
     }
 
     body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
-      color: #333;
+      font-family: 'Georgia', serif;
+      background: linear-gradient(to bottom right, var(--bg-start), var(--bg-end));
+      color: var(--primary-text);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -44,7 +42,7 @@
 
     h1 {
       margin-bottom: 1rem;
-      color: #2c3e50;
+      color: var(--primary-text);
       text-align: center;
     }
 
@@ -71,14 +69,14 @@
     .event h2 {
       font-size: 1.3rem;
       margin-bottom: 0.5rem;
-      color: #34495e;
+      color: var(--secondary-text);
     }
 
     .countdown {
       font-family: 'Courier New', monospace;
       font-size: 1.4rem;
       letter-spacing: 1px;
-      color: #e74c3c;
+      color: var(--accent);
     }
 
     footer {
@@ -87,6 +85,48 @@
       color: #7f8c8d;
       text-align: center;
       max-width: 800px;
+    }
+
+    /* Estilo do botão de alternância de tema */
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background-color: var(--accent);
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      font-size: 0.9rem;
+    }
+    .theme-toggle:hover {
+      opacity: 0.9;
+    }
+
+    /* Tema escuro personalizado; aplicado quando o corpo contém a classe 'dark-mode' */
+    body.dark-mode {
+      background: linear-gradient(to bottom right, #2c3e50, #4ca1af);
+      color: #ecf0f1;
+    }
+    body.dark-mode .event {
+      background: #34495e;
+      color: #3c6c78;
+    }
+    body.dark-mode h1,
+    body.dark-mode .event h2 {
+      color: #ecf0f1;
+    }
+    body.dark-mode .countdown {
+      color: #f1c40f;
+    }
+    body.dark-mode footer {
+      color: #bdc3c7;
+    }
+    body.dark-mode .theme-toggle {
+      background-color: #f39c12;
+      color: #2c3e50;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -111,22 +151,32 @@
   </style>
 </head>
 <body>
-  <h1>Upcoming Events</h1>
+  <h1>Meus Objectivos com Táira Matsinhe</h1>
+  <body class="dark-mode">
+  <!-- Imagem de destaque personalizada -->
+  <img src="images/hero_bg.png" alt="Nossa foto" style="max-width:100%; height:auto; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+  <!-- Botão para alternar entre tema claro e escuro -->
   <div class="timer-container" id="timerContainer">
     <!-- Events will be injected here by JavaScript -->
   </div>
   <footer>
-    <p>Customize your events by editing the <code>events</code> array in the script below. The times are interpreted in your computer’s local timezone (Africa/Maputo if that is your system setting). Once you change the names and dates, save the file and refresh to see your updated countdowns.</p>
+    <p>Tome estes objetivos como um guia do que sonho construir ao seu lado, com datas que representam o momento em que me sentiria pronto para cada etapa importante da nossa vida. Não são datas fixas, apenas Deus conhece o futuro que nos aguarda, mas sim marcos para inspirar o nosso caminho juntos.</p>
   </footer>
 
   <script>
-    // Define your events here. Each event should have a 'name' and 'date'
-    // property. The date should be in ISO 8601 format (YYYY-MM-DDTHH:MM:SS).
-    // You can add or remove events from this array.
+
     const events = [
-      { name: 'Event 1', date: '2026-01-01T00:00:00' },
-      { name: 'Event 2', date: '2026-06-15T12:00:00' },
-      { name: 'Event 3', date: '2026-12-31T23:59:59' }
+      // Metas de relacionamento a longo prazo. Substitua estes nomes e datas por
+      // seus próprios marcos. As datas abaixo são apenas exemplos.
+      { name: 'Começar a contruir nossa primeira casa', date: '2025-10-01T12:00:00' },
+      { name: 'Conhecer seu pai num jantar', date: '2025-11-15T08:00:00' },
+      { name: 'Parar de uttilizar metodos contraceptivos', date: '2027-03-09T10:00:00' },
+      { name: 'Te pedir em casamento', date: '2028-03-09T10:00:00' },
+      { name: 'Concluir o Mestrado', date: '2028-02-28T15:00:00' },
+      { name: 'Lançar um Negócio Juntos', date: '2028-06-05T09:00:00' },
+      { name: 'Surpresa', date: '2028-03-10T18:00:00' },
+      { name: 'Te levar para viajar pelo Mundo', date: '2028-03-25T08:00:00' },
+      { name: 'Escrever um Livro Juntos', date: '2027-08-12T20:00:00' }
     ];
 
     const container = document.getElementById('timerContainer');
@@ -177,6 +227,22 @@
     updateCountdowns();
     // Update every second
     setInterval(updateCountdowns, 1000);
+
+    // Tema claro/escuro: alternar e atualizar o rótulo do botão
+    const themeToggle = document.getElementById('themeToggle');
+    function updateThemeButton() {
+      if (document.body.classList.contains('dark-mode')) {
+        themeToggle.textContent = 'Modo Claro';
+      } else {
+        themeToggle.textContent = 'Modo Escuro';
+      }
+    }
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      updateThemeButton();
+    });
+    // Definir rótulo inicial do botão conforme o estado atual
+    updateThemeButton();
   </script>
 </body>
 </html>
